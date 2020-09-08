@@ -2,32 +2,34 @@
 using NinjaProducts.Domain.Entities;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace NinjaProducts.Application.Tests.Services.ProductServiceTests.ProductImplementationTests
 {
     [TestFixture]
     public class GetProductByIdImplementation
     {
-        public readonly ProductService _productService;
+        private readonly ProductService _productService;
+        private Guid _productId;
 
         public GetProductByIdImplementation()
         {
             _productService = new ProductService();
         }
 
-        [Test]
-        [TestCase("6fca31da-78ec-4a75-ba0a-bd73363a16d2")]
-        [TestCase("12b7e8be-fa16-45d7-8615-46c7c8e1ef99")]
-        [TestCase("a1631e86-7db7-4226-82cf-aea174ecfaae")]
-        public void GetProductById_ReturnProduct_Successfully(Guid Id)
+        [SetUp]
+        public void SetUp() 
         {
-            var result = _productService.GetProductById(Id);
+            _productId = _productService.CreateProduct(new Product { Name = "Keyboard", Price = 150.776m });   
+        }
+
+        [Test]
+        public void GetProductById_ReturnProduct_Successfully()
+        {
+            var result = _productService.GetProductById(_productId);
 
             Assert.IsNotNull(result);
             Assert.IsInstanceOf<Product>(result);
-            Assert.AreEqual(Id, result.Id);
+            Assert.AreEqual(_productId, result.Id);
         }
     }
 }

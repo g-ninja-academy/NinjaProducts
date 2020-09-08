@@ -24,7 +24,6 @@ namespace NinjaProducts.Application.Tests.Services.ProductServiceTests.ProductIm
 
             Assert.IsNotNull(result);
             Assert.IsInstanceOf<List<Product>>(result);
-            Assert.AreEqual(3, ((List<Product>)result).Count);
         }
     }
 }
