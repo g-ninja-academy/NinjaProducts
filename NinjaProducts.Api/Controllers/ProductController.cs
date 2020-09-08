@@ -20,7 +20,7 @@ namespace NinjaProducts.Api.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(new { data = _productService.GetProducts() });
+            return Ok(_productService.GetProducts());
         }
 
         [HttpGet("{id}")]
@@ -31,7 +31,7 @@ namespace NinjaProducts.Api.Controllers
             if (result == null)
                 return BadRequest();
 
-            return Ok(new { data = result });
+            return Ok(result);
         }
 
         [HttpPost]
