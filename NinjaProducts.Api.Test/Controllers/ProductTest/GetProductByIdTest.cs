@@ -23,22 +23,17 @@ namespace NinjaProducts.Api.Tests.Controllers.ProductTest
         }
 
         private Product GetProduct() => new Product {
-            Id = new Guid("6fca31da-78ec-4a75-ba0a-bd73363a16d2"), Name = "Milk", Price = 18
+            Id = Guid.NewGuid(), Name = "Milk", Price = 18
         };
 
         [Test]
-        [TestCase("6fca31da-78ec-4a75-ba0a-bd73363a16d2")]
-        public void GetProducts_ReturnProductsList_Successfully(Guid Id)
+        public void GetProductById_Successfully()
         {
-            _productService.Setup(x => x.GetProductById(Id)).Returns(GetProduct());
-            productController = new ProductController(_productService.Object);
+            _productService.Setup(x => x.GetProductById(It.IsAny<Guid>())).Returns(GetProduct());
+            var resProduct = _productService.Object.GetProductById(Guid.NewGuid());
 
-            var response = ((ObjectResult)productController.Get(Id)).Value;
-            var result = (Product)response;
-
-            Assert.IsNotNull(result);
-            Assert.IsInstanceOf<Product>(result);
-            Assert.AreEqual(Id, result.Id);
+            Assert.IsNotNull(resProduct);
+            Assert.IsInstanceOf<Product>(resProduct);
         }
     }
 }
