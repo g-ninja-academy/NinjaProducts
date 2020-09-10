@@ -1,0 +1,13 @@
+version: "3.1"
+services:
+ ninjaproductapi:
+  build: .
+  image: ninjaproductapi:v1  
+  container_name: ninjaproductapi
+  ports:
+       - 5000:80
+  networks:
+       - ninja-network
+networks:
+  ninja-network:
+       external: true
